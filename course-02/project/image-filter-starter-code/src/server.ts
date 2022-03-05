@@ -39,9 +39,11 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
       });
     }
 
-    const filteredImage = await filterImageFromURL(imageUrl);
+    const filteredImagePath = await filterImageFromURL(imageUrl);
 
-    res.sendFile(filteredImage);
+    res.sendFile(filteredImagePath, () => {
+      deleteLocalFiles([filteredImagePath]);
+    });
   });
 
   //! END @TODO1
